@@ -5,7 +5,17 @@
   "projects": {
     "LifeBoard": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "type": "component"
+        },
+        "@schematics/angular:service": {
+          "type": "service"
+        },
+        "@schematics/angular:interface": {
+          "type": "interface"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -22,6 +32,7 @@
               }
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ]
           },
@@ -81,5 +92,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "48ffde58-51b1-4432-8ed6-81116d657757"
   }
 }
