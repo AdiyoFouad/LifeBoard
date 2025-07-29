@@ -1,1 +1,65 @@
-<p>task works!</p>
+<div class="title">
+    <button mat-flat-button (click)="goBack()">Back<mat-icon>arrow_back</mat-icon></button>
+    <h2>{{taskId == -1 ? 'Add' : 'Update'}} Task</h2>
+</div>
+
+<form [formGroup]="formGroup" (submit)="submit($event)">
+    <mat-form-field>
+        <mat-label for="title">Title</mat-label>
+        <input type="text" matInput formControlName="title" name="title">
+        @if (isFieldInvalid('title')) {
+            <mat-error>This field is required</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label for="description">Description (optional)</mat-label>
+        <textarea matInput formControlName="description" name="description"></textarea>
+        @if (isFieldInvalid('description')) {
+            <mat-error>This field is required</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label for="priority">Priority</mat-label>
+        <mat-select formControlName="priority" name="priority">
+            @for (priority of taskPriorities; track priority) {
+                <mat-option [value]="priority">{{priority}}</mat-option>
+            }
+        </mat-select>
+        @if (isFieldInvalid('priority')) {
+            <mat-error>This field is required</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label for="status">Status</mat-label>
+        <mat-select formControlName="status" name="status">
+            @for (status of taskStatus; track status) {
+                <mat-option [value]="status">{{status}}</mat-option>
+            }
+        </mat-select>
+        @if (isFieldInvalid('status')) {
+            <mat-error>This field is required</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label for="deadline">Deadline</mat-label>
+        <input matInput formControlName="deadline" name="deadline" [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (isFieldInvalid('deadline')) {
+            <mat-error>This field is required</mat-error>
+        }
+    </mat-form-field>
+
+    <div class="button-container">
+        <div class="left">
+            @if (taskId != -1) {
+                <button mat-flat-button (click)="deleteTask()">Delete</button>
+            }
+        </div>
+        <div class="right">
+            <button matButton="tonal" (click)="goBack()">Cancel</button>
+            <button mat-flat-button type="submit">{{taskId == -1 ? 'Add' : 'Update'}}</button>
+        </div>
+    </div>
+</form>

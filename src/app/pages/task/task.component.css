@@ -1,0 +1,54 @@
+.title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.title button {
+    background-color: rgb(106, 106, 183);
+    color: white;
+    box-shadow: none;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 10px auto;
+    min-width: 450px;
+    background-color: white;
+    padding: 20px;
+}
+
+label {
+    font-size: small;
+}
+
+.ng-dirty.ng-invalid, .ng-touch.ng-invalid{
+    border-color: red;
+    border-width: 1px;
+}
+
+mat-error {
+    font-size: x-small;
+    color: red;
+}
+
+.button-container .right, .button-container .left {
+    display: inline-block;
+    width: 50%;
+    margin-top: 10px;
+}
+
+.button-container .right {
+    text-align: right;
+}
+
+.button-container .right button{
+    margin-left: 10px;
+}
+
+.button-container .left button{
+    background-color: crimson;
+}

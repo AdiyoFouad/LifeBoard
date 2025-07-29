@@ -169,12 +169,13 @@ export class TaskService {
     return of(task);
   }
 
-  delete(id:number) : void {
+  delete(id:number) : Observable<void> {
     const taskIndex = this.tasks.findIndex((originalTask) => originalTask.id == id)
     if (taskIndex != -1) {
       this.tasks.splice(taskIndex, 1);
     }
     this.save();
+    return of();
   }
 
 

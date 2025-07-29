@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-task-list',
@@ -17,7 +18,8 @@ import { Router } from '@angular/router';
     MatPaginatorModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    DatePipe
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
@@ -25,7 +27,11 @@ import { Router } from '@angular/router';
 export class TaskListComponent implements OnInit{
   private taskService = inject(TaskService);
   private router = inject(Router);
-  tasks = toSignal(this.taskService.getAll());
+  tasks = toSignal(this.taskService.getAll().pipe(
+    map( tasks => tasks.slice().sort((a, b) => 
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    )
+  ));
 
   displayedColumns: string[] = ['title', 'priority', 'deadline', 'status', 'action'];
   dataSource = new MatTableDataSource<any>();
