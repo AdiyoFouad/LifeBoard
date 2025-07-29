@@ -1,0 +1,21 @@
+.title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.title .right{
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+}
+
+table {
+  width: 100%;
+}
+
+.action button {
+    box-shadow: none;
+    transform: scale(0.6);
+    background-color: rgba(119, 190, 111, 0.989);
+}
