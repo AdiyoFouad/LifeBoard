@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule, MatNavList } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Subject, Subscription, takeUntil, tap } from 'rxjs';
 
 @Component({
@@ -29,6 +29,7 @@ export class App implements OnInit, OnDestroy{
   isMobile = signal(false);
   private breakpointObserver = inject(BreakpointObserver);
   private subscriptions = new Subscription();
+  private router = inject(Router);
 
   ngOnInit(): void {
 
@@ -40,6 +41,10 @@ export class App implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  goAddTask(){
+    this.router.navigate(['/task']);
   }
 
   
