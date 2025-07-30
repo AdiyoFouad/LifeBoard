@@ -1,0 +1,36 @@
+.dialog-title {
+    text-align : center;
+    font-weight: bold;
+    color: #394ec6;
+}
+
+.task-card {
+    padding: 10px;
+    margin: 2px;
+}
+
+.task-info {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.label {
+    font-weight: bold;
+    color: #555;
+    min-width: 80px;
+}
+
+mat-chip {
+    color: white;
+    font-weight: bold;
+}
+
+.status-chip mat-icon, .priority-chip mat-icon {
+    margin-right: 5px;
+}
+
+#upgrade-button {
+    background-color: rgb(224, 184, 2);
+}

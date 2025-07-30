@@ -4,11 +4,15 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
-import { DatePipe } from '@angular/common';
+import { DatePipe, KeyValuePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
+import { filter, map, switchMap, tap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskViewDialogComponent } from '../../components/task-view-dialog/task-view-dialog.component';
+import { Task } from '../../models/task.model';
+import { IconOptions, TaskPriorityIcon, TaskStatus, TaskStatusIcon } from '../../utils/task.utils';
 
 @Component({
   selector: 'app-task-list',
@@ -19,7 +23,8 @@ import { map } from 'rxjs';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    DatePipe
+    DatePipe,
+    KeyValuePipe
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
@@ -32,6 +37,9 @@ export class TaskListComponent implements OnInit{
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     )
   ));
+  TaskStatusIcon = TaskStatusIcon;
+  TaskPriorityIcon = TaskPriorityIcon;
+  private readonly dialog = inject(MatDialog);
 
   displayedColumns: string[] = ['title', 'priority', 'deadline', 'status', 'action'];
   dataSource = new MatTableDataSource<any>();
@@ -40,7 +48,7 @@ export class TaskListComponent implements OnInit{
 
   constructor() {
     effect(() => {
-      
+
     });
   }
 
@@ -59,6 +67,35 @@ export class TaskListComponent implements OnInit{
       this.router.navigate(['/task']);
     }
   }
+
+  
+  openTaskViewDialog(task: Task){
+    const dialogRef = this.dialog.open(TaskViewDialogComponent, {
+      data : task
+    });
+    dialogRef.afterClosed().pipe(
+      filter(changeStatus => changeStatus),
+      switchMap(_ => {
+        const statuses = Object.values(TaskStatus);
+        const currentIndex = statuses.indexOf(task.status);
+        const nextStatus = statuses[(currentIndex + 1) % statuses.length];
+        task.status = nextStatus;
+        return this.taskService.update(task);
+      }), 
+      tap()
+    ).subscribe(_ => {
+       this.dataSource.data = this.tasks() || [];
+      });
+  }
+
+  getTaskStatusIconOptions(task : Task) : IconOptions{
+    return TaskStatusIcon[task.status];
+  }
+  getTaskPriorityIconOptions(task : Task) : IconOptions{
+    return TaskPriorityIcon[task.priority];
+  }
+
+
 
   
 }
