@@ -33,7 +33,7 @@ export class TaskService {
 
   private init(){
     const task0 = new Task();
-    task0.id = 1;
+    task0.id = this.currentIndex++;
     task0.title = 'Faire les courses';
     task0.description = 'Acheter du lait, du pain, des œufs et des fruits.';
     task0.priority = TaskPriority.MEDIUM;
@@ -43,7 +43,7 @@ export class TaskService {
     this.tasks.push(task0);
 
     const task1 = new Task();
-    task1.id = 2;
+    task1.id = this.currentIndex++;
     task1.title = 'Réviser Angular';
     task1.description = 'Revoir les modules, services et routing pour le projet final.';
     task1.priority = TaskPriority.HIGH;
@@ -53,7 +53,7 @@ export class TaskService {
     this.tasks.push(task1);
 
     const task2 = new Task();
-    task2.id = 3;
+    task2.id = this.currentIndex++;
     task2.title = 'Nettoyer l’appartement';
     task2.description = 'Passer l’aspirateur, nettoyer la cuisine et la salle de bain.';
     task2.priority = TaskPriority.LOW;
@@ -63,7 +63,7 @@ export class TaskService {
     this.tasks.push(task2);
 
     const task3 = new Task();
-    task3.id = 4;
+    task3.id = this.currentIndex++;
     task3.title = 'Rendez-vous médical';
     task3.description = 'Consultation chez le dentiste à 10h30.';
     task3.priority = TaskPriority.MEDIUM;
@@ -73,7 +73,7 @@ export class TaskService {
     this.tasks.push(task3);
 
     const task4 = new Task();
-    task4.id = 5;
+    task4.id = this.currentIndex++;
     task4.title = 'Finaliser le rapport';
     task4.description = 'Compléter et envoyer le rapport trimestriel à la direction.';
     task4.priority = TaskPriority.HIGH;
@@ -83,7 +83,7 @@ export class TaskService {
     this.tasks.push(task4);
 
     const task5 = new Task();
-    task5.id = 6;
+    task5.id = this.currentIndex++;
     task5.title = 'Réserver les vacances';
     task5.description = 'Trouver un hôtel et réserver les billets pour Barcelone.';
     task5.priority = TaskPriority.MEDIUM;
@@ -93,7 +93,7 @@ export class TaskService {
     this.tasks.push(task5);
 
     const task6 = new Task();
-    task6.id = 7;
+    task6.id = this.currentIndex++;
     task6.title = 'Appeler le service client';
     task6.description = 'Contacter l’assistance pour un problème de facturation.';
     task6.priority = TaskPriority.LOW;
@@ -103,7 +103,7 @@ export class TaskService {
     this.tasks.push(task6);
 
     const task7 = new Task();
-    task7.id = 8;
+    task7.id = this.currentIndex++;
     task7.title = 'Préparer la présentation';
     task7.description = 'Créer les slides pour la réunion de lundi matin.';
     task7.priority = TaskPriority.HIGH;
@@ -113,7 +113,7 @@ export class TaskService {
     this.tasks.push(task7);
 
     const task8 = new Task();
-    task8.id = 9;
+    task8.id = this.currentIndex++;
     task8.title = 'Envoyer les invitations';
     task8.description = 'Inviter les participants à l’atelier de design.';
     task8.priority = TaskPriority.MEDIUM;
@@ -123,7 +123,7 @@ export class TaskService {
     this.tasks.push(task8);
 
     const task9 = new Task();
-    task9.id = 10;
+    task9.id = this.currentIndex++;
     task9.title = 'Changer mot de passe';
     task9.description = 'Mettre à jour le mot de passe de la boîte mail pro.';
     task9.priority = TaskPriority.LOW;
@@ -191,7 +191,7 @@ export class TaskService {
       filter.taskStatus == 'All' ? true : task.status == filter.taskStatus
     )
     .filter((task) => 
-      filter.taskLate == false ? true : task.deadline < new Date()
+      filter.taskLate == false ? true : task.deadline < new Date() && task.status != TaskStatus.DONE
     );
 
     return of(filteredTask);
