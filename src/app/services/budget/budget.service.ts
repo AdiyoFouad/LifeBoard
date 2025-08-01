@@ -9,8 +9,12 @@ import { BudgetCategory, BudgetType } from '../../utils/budget.utils';
 })
 export class BudgetService {
   
-  private budgets : Budget[] = [];
-  private currentIndex = 1;
+  budgets : Budget[] = [];
+  currentIndex = 1;
+
+  constructor() {
+    this.load();
+  }
 
   load() {
     const budgetData = localStorage.getItem('budget');
@@ -19,6 +23,7 @@ export class BudgetService {
       this.budgets = JSON.parse(budgetData).map((budget : IBudget) => Budget.fromJson(budget));
       this.currentIndex = Math.max(...this.budgets.map(((budget : Budget) => budget.id)));
     } else {
+      console.log('fff');
       this.init();
       this.save();
     }
@@ -104,7 +109,8 @@ export class BudgetService {
   }
 
   getAll() : Observable<Budget[]>{
-    return of(this.budgets);
+    const ok = this.budgets.sort(((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime())));
+    return of(ok);
   }
 
   get(id : number) : Observable<Budget | undefined>{
