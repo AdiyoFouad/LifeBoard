@@ -83,6 +83,9 @@ export class TaskComponent implements OnInit, OnDestroy {
   submit(event : Event){
     event.preventDefault();
     const task = Object.assign(new Task(), this.formGroup.value);
+    if (this.formGroup.invalid) {
+      return;
+    }
     if (this.taskId == -1) {
       this.taskService.add(task).pipe(
         takeUntil(this.destroy$)
@@ -101,7 +104,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   isFieldInvalid(field :string){
-    return this.formGroup.get(field)?.invalid && (this.formGroup.get(field)?.dirty || this.formGroup.get(field)?.touched)
+    return this.formGroup.get(field)?.invalid || (this.formGroup.get(field)?.dirty || this.formGroup.get(field)?.touched)
   }
 
   goBack(){

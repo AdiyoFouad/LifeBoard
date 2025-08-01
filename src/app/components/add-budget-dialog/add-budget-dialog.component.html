@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>Add Budget</h2>
+<form [formGroup]="formGroup" (submit)="submit($event)">
+        <mat-radio-group #bugetType name="type" formControlName="type" aria-label="Select an option">
+            @for (type of budgetTypes; track type) {
+                <mat-radio-button value="{{type}}">{{type}}</mat-radio-button>
+            }
+        </mat-radio-group>
+
+        <mat-form-field>
+            <mat-label for="amount">Amount</mat-label>
+            <input matInput type="number" name="amount" formControlName="amount">
+            
+            @if (isFieldInvalid('amount')) {
+                @if (formGroup.get('amount')?.hasError('required')) {
+                    <mat-error>This field is required</mat-error>
+                }
+                @if (formGroup.get('amount')?.hasError('min')) {
+                    <mat-error>This field must be bigger than 0</mat-error>
+                }
+                
+            }
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill">
+            <mat-label for="category">Category</mat-label>
+            <mat-select name="category" formControlName="category">
+                @for (category of categories; track category) {
+                    <mat-option [value]="category">{{category}}</mat-option>
+                }
+            </mat-select>
+            @if (isFieldInvalid('category')) {
+                <mat-error>This field is required</mat-error>
+            }
+        </mat-form-field>
+
+        
+        <mat-form-field>
+            <mat-label for="date">Date</mat-label>
+            <input matInput formControlName="date" name="date" [matDatepicker]="picker">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (isFieldInvalid('date')) {
+                <mat-error>This field is required</mat-error>
+            }
+        </mat-form-field>
+
+        <div class="button-container">
+            <button matButton="tonal" type="button" (click)="closeFButton.click()">Cancel</button>
+            <button mat-flat-button type="submit" (click)="closeTButton.click()">Add</button>
+        </div>
+            
+    </form>
+    
+<mat-dialog-actions>
+    <button [mat-dialog-close]="false" #closeFButton hidden></button>
+    <button [mat-dialog-close]="true" #closeTButton hidden></button>
+</mat-dialog-actions>

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
 import { BudgetService } from '../../services/budget/budget.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { AddBudgetDialogComponent } from '../../components/add-budget-dialog/add-budget-dialog.component';
+import { filter, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-budget',
@@ -27,6 +30,15 @@ export class BudgetComponent implements OnInit{
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator! : MatPaginator;
 
+  
+  constructor() {
+    effect(() => {
+
+    });
+  }
+
+  private readonly dialog = inject(MatDialog);
+
   ngOnInit(): void {
     this.dataSource.data = this.budgets() || [];
   }
@@ -35,7 +47,11 @@ export class BudgetComponent implements OnInit{
     this.dataSource.paginator = this.paginator;
   }
 
-  budgetAction(){
-
+  addBudget(){
+    console.log(this.budgets());
+    const dialogRef = this.dialog.open(AddBudgetDialogComponent);
+    dialogRef.afterClosed().subscribe(_ => {
+      this.dataSource.data = this.budgets() || [];
+    });
   }
 }
