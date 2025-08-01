@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { Observable, of } from 'rxjs';
 import { TaskPriority, TaskStatus } from '../../utils/task.utils';
+import { ITaskFilter } from '../../interfaces/task-filter.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -176,6 +177,25 @@ export class TaskService {
     }
     this.save();
     return of();
+  }
+
+  getFilteredTasks(filter : ITaskFilter) : Observable<Task[]> {
+    const filteredTask =  this.tasks
+    .filter((task) => 
+      filter.taskTitle ? task.title.toLocaleLowerCase().includes(filter.taskTitle.toLocaleLowerCase()) : true
+    )
+    .filter((task) => 
+      filter.taskPriority == 'All' ? true : task.priority == filter.taskPriority
+    )
+    .filter((task) => 
+      filter.taskStatus == 'All' ? true : task.status == filter.taskStatus
+    )
+    .filter((task) => 
+      filter.taskLate == false ? true : task.deadline < new Date()
+    );
+
+    return of(filteredTask);
+    
   }
 
 

@@ -36,6 +36,12 @@ table {
     margin-right: 35px;
 }
 
+.no-data {
+    padding: 40px 0;
+    text-align: center;
+
+}
+
 
 @media (max-width : 768px) {
     .legend {

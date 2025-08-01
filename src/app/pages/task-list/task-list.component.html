@@ -7,6 +7,10 @@
     </div> 
 </div>
 
+<div>
+    <app-task-filter (filterTasks)="filterTasks($event)"></app-task-filter>
+</div>
+
 <div class="mat-elevation-z8" >
     <table mat-table [dataSource]="dataSource!" >
         <ng-container matColumnDef="title">
@@ -40,6 +44,12 @@
         <tr tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    
+    @if (!dataSource.data.length) {
+        <p class="no-data">
+            No tasks to display.....
+        </p>
+    }
     <div>
         <div class="legend">
             <p>Priority</p>
@@ -50,6 +60,7 @@
                 </div>
             }
         </div>
+        
         <div class="legend">
             <p>Status</p>
             @for (status of TaskStatusIcon | keyvalue; track $index ) {

@@ -15,7 +15,7 @@
     );
 }
 
-.mobile-toggle {
+mat-toolbar {
     display: none;
 }
 
@@ -52,6 +52,7 @@ mat-sidenav-content div.main-content {
 }
 
 
+
 @media (max-width : 768px){
     .sidenav {
     width: 200px;
@@ -59,5 +60,10 @@ mat-sidenav-content div.main-content {
 
 .mobile-toggle {
     display: inline;
+}
+
+
+mat-toolbar {
+    display: block;
 }
 }

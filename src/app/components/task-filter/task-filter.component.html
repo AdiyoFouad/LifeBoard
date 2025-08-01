@@ -1,0 +1,27 @@
+<div class="filter-div">
+    <form [formGroup]="formGroup" class="filterTasksForm">
+        <mat-form-field>
+            <mat-label for="taskTitle">Search title...</mat-label>
+            <input type="text" matInput name="taskTitle" formControlName="taskTitle">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label for="taskPriority">Priority</mat-label>
+            <mat-select formControlName="taskPriority" name="taskPriority">
+                @for (priority of taskPriorities; track priority) {
+                    <mat-option [value]="priority">{{priority}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label for="taskStatus">Status</mat-label>
+            <mat-select formControlName="taskStatus" name="taskStatus">
+                @for (statut of taskStatuses; track statut) {
+                    <mat-option [value]="statut">{{statut}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-checkbox formControlName="taskLate"  name="taskLate">Task Late</mat-checkbox>
+        
+    </form>
+</div>

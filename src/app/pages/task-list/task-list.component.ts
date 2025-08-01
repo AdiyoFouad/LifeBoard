@@ -8,11 +8,13 @@ import { DatePipe, KeyValuePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { filter, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskViewDialogComponent } from '../../components/task-view-dialog/task-view-dialog.component';
 import { Task } from '../../models/task.model';
 import { IconOptions, TaskPriorityIcon, TaskStatus, TaskStatusIcon } from '../../utils/task.utils';
+import { TaskFilterComponent } from "../../components/task-filter/task-filter.component";
+import { ITaskFilter } from '../../interfaces/task-filter.interface';
 
 @Component({
   selector: 'app-task-list',
@@ -24,12 +26,13 @@ import { IconOptions, TaskPriorityIcon, TaskStatus, TaskStatusIcon } from '../..
     MatIconModule,
     MatButtonModule,
     DatePipe,
-    KeyValuePipe
-  ],
+    KeyValuePipe,
+    TaskFilterComponent
+],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
-export class TaskListComponent implements OnInit{
+export class TaskListComponent implements OnInit, OnDestroy{
   private taskService = inject(TaskService);
   private router = inject(Router);
   tasks = toSignal(this.taskService.getAll().pipe(
@@ -40,6 +43,7 @@ export class TaskListComponent implements OnInit{
   TaskStatusIcon = TaskStatusIcon;
   TaskPriorityIcon = TaskPriorityIcon;
   private readonly dialog = inject(MatDialog);
+  private destroy$! : Subject<boolean>;
 
   displayedColumns: string[] = ['title', 'priority', 'deadline', 'status', 'action'];
   dataSource = new MatTableDataSource<any>();
@@ -53,11 +57,16 @@ export class TaskListComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.destroy$ = new Subject<boolean>();
     this.dataSource.data = this.tasks() || [];
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 
   goToTask(id?:number){
@@ -95,6 +104,16 @@ export class TaskListComponent implements OnInit{
     return TaskPriorityIcon[task.priority];
   }
 
+  filterTasks(event : ITaskFilter){
+    this.taskService.getFilteredTasks(event).pipe(
+      map( tasks => tasks.slice().sort((a, b) => 
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      ),
+      takeUntil(this.destroy$)
+    ).subscribe(data => {
+      this.dataSource.data = data;
+    });
+  }
 
 
   

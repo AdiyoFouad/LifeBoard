@@ -1,0 +1,18 @@
+.filter-div {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.filterTasksForm {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filterTasksForm mat-form-field, mat-checkbox{
+    flex: 1 1 100px;
+}
+
+
