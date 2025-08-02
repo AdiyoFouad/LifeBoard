@@ -1,0 +1,13 @@
+.filter-div {
+    width: 50%;
+    min-width: 400px;
+    margin: 0 auto;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+}

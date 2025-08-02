@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Budget } from '../../models/budget.model';
 import { IBudget } from '../../interfaces/budget.interface';
 import { BudgetCategory, BudgetType } from '../../utils/budget.utils';
+import { IBudgetFilter } from '../../interfaces/budget-filter.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -141,6 +142,14 @@ export class BudgetService {
     }
     this.save();
     return of();
+  }
+
+  getFilteredBudgets(filter : IBudgetFilter) : Observable<Budget[]>{
+    const filteredBudgets = this.budgets
+    .filter(budget => filter.type == 'All' ? true : budget.type == filter.type)
+    .filter(budget => filter.range.startDate ? new Date(budget.date).getTime() > new Date(filter.range.startDate).getTime() : true)
+    .filter(budget => filter.range.endDate ? new Date(budget.date).getTime() < new Date(filter.range.endDate).getTime() : true);
+    return of(filteredBudgets);
   }
 
 }

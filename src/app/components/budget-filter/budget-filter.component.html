@@ -1,0 +1,22 @@
+<div class="filter-div">
+    <form [formGroup]="formGroup">
+        <mat-form-field>
+            <mat-label for="type">Select budget type</mat-label>
+            <mat-select name="type" formControlName="type">
+                @for (type of types; track type) {
+                    <mat-option [value]="type">{{type}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input formGroupName="range" [rangePicker]="picker">
+                <input matStartDate formControlName="startDate" placeholder="Start date">
+                <input matEndDate formControlName="endDate" placeholder="End date">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY - MM/DD/YY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+    </form>
+</div>

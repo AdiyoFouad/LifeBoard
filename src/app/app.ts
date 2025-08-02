@@ -3,12 +3,14 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, Signal, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule, MatNavList } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Subject, Subscription, takeUntil, tap } from 'rxjs';
+import { filter, Subject, Subscription, takeUntil, tap } from 'rxjs';
+import { AddBudgetDialogComponent } from './components/add-budget-dialog/add-budget-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +32,8 @@ export class App implements OnInit, OnDestroy{
   private breakpointObserver = inject(BreakpointObserver);
   private subscriptions = new Subscription();
   private router = inject(Router);
+  
+  private readonly dialog = inject(MatDialog);
 
   ngOnInit(): void {
 
@@ -46,6 +50,15 @@ export class App implements OnInit, OnDestroy{
   goAddTask(){
     this.router.navigate(['/task']);
   }
+
+  addBudget(){
+      const dialogRef = this.dialog.open(AddBudgetDialogComponent);
+      dialogRef.afterClosed().pipe(
+        filter(confirm => confirm)
+      ).subscribe(_ => {
+        this.router.navigate(['/budget'])
+      });
+    }
 
   
 }

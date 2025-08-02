@@ -6,6 +6,10 @@
     </div> 
 </div>
 
+<div>
+    <app-budget-filter (filterBudget)="filterBudget($event)"></app-budget-filter>
+</div>
+
 <div class="mat-elevation-z8" >
     <table mat-table [dataSource]="dataSource">
         
