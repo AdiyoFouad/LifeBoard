@@ -10,6 +10,11 @@ export class HabitTrackingService {
   trackings : HabitTracking[] = [];
   currentIndex : number = 1;
 
+  
+  constructor(){
+    this.load();
+  }
+
   save(){
     localStorage.setItem('lifeboard_habit_tracking', JSON.stringify(this.trackings));
   }
