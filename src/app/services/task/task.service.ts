@@ -17,11 +17,11 @@ export class TaskService {
   }
 
   private save(){
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    localStorage.setItem('lifeboard_tasks', JSON.stringify(this.tasks));
   }
 
   private load(){
-    const taskData = localStorage.getItem('tasks');
+    const taskData = localStorage.getItem('lifeboard_tasks');
     if (taskData) {
       this.tasks = JSON.parse(taskData).map((taskJson : any) => Task.fromJson(taskJson));
       this.currentIndex = Math.max(...this.tasks.map(task => task.id))

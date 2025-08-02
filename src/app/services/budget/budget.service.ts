@@ -18,7 +18,7 @@ export class BudgetService {
   }
 
   load() {
-    const budgetData = localStorage.getItem('budget');
+    const budgetData = localStorage.getItem('lifeboard_budget');
 
     if (budgetData) {
       this.budgets = JSON.parse(budgetData).map((budget : IBudget) => Budget.fromJson(budget));
@@ -31,7 +31,7 @@ export class BudgetService {
   }
 
   save() {
-    localStorage.setItem('budget', JSON.stringify(this.budgets))
+    localStorage.setItem('lifeboard_budget', JSON.stringify(this.budgets))
   }
 
   init(){
