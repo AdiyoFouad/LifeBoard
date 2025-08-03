@@ -1,0 +1,16 @@
+<mat-card class="habit-card">
+    <mat-card-title>{{habit()?.name}}</mat-card-title>
+    <mat-card-subtitle>
+        <hr/>
+        {{habit()?.frequency}} - Goal: {{habit()?.goal}}
+    </mat-card-subtitle>
+    <mat-card-content>
+        <mat-progress-bar mode="determinate" [value]="habit()?.progress">
+        </mat-progress-bar>
+        <p class="progress-text">{{habit()?.progress}}% completed</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-flat-button (click)="seeDetails()">Détails</button>
+        <button mat-button (click)="goUpdate(habit()?.id!)"><mat-icon>edit</mat-icon>Update</button>
+    </mat-card-actions>
+</mat-card>

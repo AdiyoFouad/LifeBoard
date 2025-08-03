@@ -26,11 +26,12 @@ export class HabitService {
 
     if (dataJson) {
       this.habits = JSON.parse(dataJson).map((habitJson:any) => Habit.fromJson(habitJson));
-      this.currentIndex = Math.max(...this.habits.map(habit => habit.id))
+      this.currentIndex = Math.max(...this.habits.map(habit => habit.id)) + 1;
     } else { 
       this.init();
       this.save();
-    }  
+    }
+    
   }
 
   init(){
@@ -110,7 +111,7 @@ export class HabitService {
   }
 
   get(id : number) : Observable<Habit | undefined>{
-    const habit = this.habits.find(originalHabit => originalHabit.id = id);
+    const habit = this.habits.find(originalHabit => originalHabit.id == id);
     return of(habit ? habit : undefined);
   }
 
@@ -138,31 +139,6 @@ export class HabitService {
     }
     this.save();
     return of();
-  }
-
-  calculateProgress(id : number) : number{
-    const trackingService = new HabitTrackingService();
-    let tracking : HabitTracking[] = [];
-    const habit = this.habits.find(originalHabit => originalHabit.id = id);
-    if (!habit) {
-      return 0;
-    }
-    trackingService.getTrackingByHabit(habit.id).subscribe(data => {
-      tracking = data
-    });
-
-    if (habit.frequency === HabitFrequency.DAILY) {
-      const totalDays = new Set(tracking.map(t => t.date)).size;
-      const completedDays = tracking.filter(t => t.completed).length;
-      return totalDays === 0 ? 0 : Math.round(completedDays / totalDays)*100;
-    }
-
-    if (habit.frequency === HabitFrequency.WEEKLY) {
-      const completedDays = tracking.filter(t => t.completed).length;
-      return habit.goal > 0 ? Math.min(Math.round((completedDays / habit.goal)*100), 100) : 0;
-    }
-
-    return 0;
   }
 
 }

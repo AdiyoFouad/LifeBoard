@@ -1,0 +1,16 @@
+
+<div class="title">
+    <mat-icon>self_improvement</mat-icon>
+    <h2>Habits</h2>
+    <div class="right">
+        <button mat-flat-button (click)="addHabit()">Add Habit</button>
+    </div> 
+</div>
+
+        
+<div class="habit-cards">
+    @for (habit of habits(); track habit.id) {
+        <app-habit [habit]="habit"></app-habit>
+    }
+</div>
+    

@@ -24,7 +24,7 @@ export class TaskService {
     const taskData = localStorage.getItem('lifeboard_tasks');
     if (taskData) {
       this.tasks = JSON.parse(taskData).map((taskJson : any) => Task.fromJson(taskJson));
-      this.currentIndex = Math.max(...this.tasks.map(task => task.id))
+      this.currentIndex = Math.max(...this.tasks.map(task => task.id)) + 1
     } else {
       this.init();
       this.save();

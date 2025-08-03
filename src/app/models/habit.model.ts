@@ -6,7 +6,7 @@ export class Habit implements IHabit{
     name: string = "New Habit";
     frequency: HabitFrequency = HabitFrequency.DAILY;
     goal: number = 1;
-    progress?: number | undefined;
+    progress: number | undefined;
 
     static fromJson(habitJson : IHabit) : Habit {
         return Object.assign(new Habit(), habitJson);
@@ -16,6 +16,11 @@ export class Habit implements IHabit{
         const habitJson : IHabit = Object.assign({}, this);
         delete habitJson.id;
         return habitJson;
+    }
+
+    updateProgress(newProgress : number) : Habit {
+        this.progress = newProgress;
+        return this;
     }
 
 }

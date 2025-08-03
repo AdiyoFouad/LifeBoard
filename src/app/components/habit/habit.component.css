@@ -1,0 +1,16 @@
+
+.habit-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+    height: 250px;
+}
+
+mat-card-title{
+    height: 50px;
+}
+
+mat-card-actions button {
+    margin-right: 10px;
+}

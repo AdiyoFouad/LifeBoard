@@ -22,9 +22,8 @@ export class BudgetService {
 
     if (budgetData) {
       this.budgets = JSON.parse(budgetData).map((budget : IBudget) => Budget.fromJson(budget));
-      this.currentIndex = Math.max(...this.budgets.map(((budget : Budget) => budget.id)));
+      this.currentIndex = Math.max(...this.budgets.map(((budget : Budget) => budget.id))) + 1;
     } else {
-      console.log('fff');
       this.init();
       this.save();
     }

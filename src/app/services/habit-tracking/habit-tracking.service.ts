@@ -1,6 +1,8 @@
 import { map, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HabitTracking } from '../../models/habit-tracking.model';
+import { Habit } from '../../models/habit.model';
+import { HabitFrequency } from '../../utils/habit.utils';
 
 @Injectable({
   providedIn: 'root'
@@ -57,10 +59,37 @@ export class HabitTrackingService {
   }
 
   
+  calculateProgress(habit : Habit, periodDates?: Date[]) : number{
+    const datesToCheck = periodDates ?? this.getCurrentWeekDates();
+    
+    //const goal = habit.frequency 
+    if (habit.frequency == HabitFrequency.WEEKLY) {
+
+      //récupérer la taille du tableau de trackings filtrer en fonction du habitId et du fait que la date du tracking soit dans la semaine en cours
+      const completedDays = this.trackings.filter(t => t.habitId == habit.id && datesToCheck.some(d => this.isSameDays(d, t.date))).length;
+      return Math.min(Math.round((completedDays / habit.goal)*100), 100);
+    }
+
+    if (habit.frequency == HabitFrequency.DAILY) {
+      let completedDays = 0;
+      
+      datesToCheck.forEach(d => {
+        const completedGoalPerDay = this.trackings.filter(t => t.habitId == habit.id && this.isSameDays(t.date, d)).length;
+        if (completedGoalPerDay == habit.goal) {
+          completedDays++;
+        }
+      });
+      return Math.min(Math.round((completedDays / 7)*100), 100);
+    }
+
+    return 0;
+  }
+
+ 
   init(){
     const tracking0 = new HabitTracking();
     tracking0.id = this.currentIndex++;
-    tracking0.habitId = 0;
+    tracking0.habitId = 1;
     tracking0.date = new Date('2025-08-01');
     tracking0.completed = true;
     this.trackings.push(tracking0);
@@ -198,6 +227,36 @@ export class HabitTrackingService {
     tracking19.completed = false;
     this.trackings.push(tracking19);
   }
+
+  getCurrentWeekDates(): Date[] {
+    const now = new Date();
+    const day = now.getDay();
+    const diffToMonday = day == 0 ? -6 : 1 - day;
+
+    const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    monday.setDate(now.getDate() + diffToMonday);
+
+    const weekDates : Date [] = [];
+
+    for (let i = 0; i<7; i++){
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      weekDates.push(d);
+    }
+
+    return weekDates;
+  }
+
+  private isSameDays(d1: Date, d2 : Date) : boolean {
+    d1 = new Date(d1);
+    d2 = new Date(d2);
+    return (
+      d1.getFullYear() == d2.getFullYear() &&
+      d1.getMonth() == d2.getMonth() &&
+      d1.getDate() == d2.getDate() 
+    );
+  }
+
 
   
 }

@@ -1,0 +1,35 @@
+<div class="title">
+    <button mat-flat-button (click)="goBack()">Back<mat-icon>arrow_back</mat-icon></button>
+    <h2>{{habitId == -1 ? 'Add' : 'Update'}} Habit {{habitId}}</h2>
+</div>
+
+<form [formGroup]="formGroup" (submit)="submit($event)">
+    <mat-form-field>
+        <mat-label for="name">Name</mat-label>
+        <input matInput type="text" name="name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label for="frequency">Frequency</mat-label>
+        <mat-select name="frequency" formControlName="frequency">
+            @for (frequency of frequencies; track frequency) {
+                <mat-option [value]="frequency">{{frequency}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label for="goal">Goal</mat-label>
+        <input type="number" matInput name="goal" formControlName="goal">
+    </mat-form-field>
+    
+    <div class="button-container">
+        <div class="left">
+            @if (habitId != -1) {
+                <button mat-flat-button (click)="deleteHabit()">Delete</button>
+            }
+        </div>
+        <div class="right">
+            <button matButton="tonal" (click)="goBack()">Cancel</button>
+            <button mat-flat-button type="submit">{{habitId == -1 ? 'Add' : 'Update'}}</button>
+        </div>
+    </div>
+</form>
