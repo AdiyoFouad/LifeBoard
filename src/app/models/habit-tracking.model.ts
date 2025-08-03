@@ -2,7 +2,7 @@ import { IHabitTracking } from "../interfaces/habit.interface";
 
 export class HabitTracking implements IHabitTracking{
     id: number = -1;
-    habitId: number = 0;
+    habitId: number = -1;
     date: Date = new Date();
     completed: boolean = false;
 

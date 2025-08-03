@@ -7,6 +7,9 @@
     </div> 
 </div>
 
+<div>
+    Current Weeks: {{getCurrentWeekDates()[0] | date : 'fullDate'}} - {{getCurrentWeekDates()[6] | date : 'fullDate'}}
+</div>
         
 <div class="habit-cards">
     @for (habit of habits(); track habit.id) {

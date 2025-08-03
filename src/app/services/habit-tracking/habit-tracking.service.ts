@@ -9,8 +9,8 @@ import { HabitFrequency } from '../../utils/habit.utils';
 })
 export class HabitTrackingService {
 
-  trackings : HabitTracking[] = [];
-  currentIndex : number = 1;
+  private trackings : HabitTracking[] = [];
+  private currentIndex : number = 1;
 
   
   constructor(){
@@ -25,23 +25,23 @@ export class HabitTrackingService {
     const dataJson = localStorage.getItem('lifeboard_habit_tracking');
     if (dataJson) {
       this.trackings = JSON.parse(dataJson).map((trackingJson : any) => HabitTracking.fromJson(trackingJson));
-      this.currentIndex = Math.max(...this.trackings.map(tracking => tracking.id))
+      this.currentIndex = Math.max(...this.trackings.map(tracking => tracking.id)) + 1
     } else { 
       this.init();
       this.save();
     }
   }
 
-  getTrackingByHabit(habitId: number) : Observable<HabitTracking[]>{
-    return of(this.trackings.filter(t => t.id == habitId))
+  getTrackingByHabitAndDate(habitId: number, date : Date) : Observable<HabitTracking[]>{
+    return of(this.trackings.filter(t => t.habitId == habitId && this.isSameDays(date, t.date)))
   }
 
-  toggleTracking(habitId: number, date: Date) : Observable<void>{
-    const trackingIndex = this.trackings.findIndex(t => t.id == habitId && t.date == date);
-    if (trackingIndex != -1) {
-      this.trackings[trackingIndex].completed = !this.trackings[trackingIndex].completed;
+  toggleTracking(trackingId: number, date: Date, habitId : number) : Observable<HabitTracking>{
+    const tracking = new HabitTracking();
+    if (trackingId != -1){
+      const trackingIndex = this.trackings.findIndex(t => t.id == trackingId && this.isSameDays(date, t.date));
+      this.trackings.splice(trackingIndex, 1);
     } else {
-      const tracking = new HabitTracking();
       tracking.id = this.currentIndex;
       tracking.date = date;
       tracking.completed = true;
@@ -50,7 +50,12 @@ export class HabitTrackingService {
       this.currentIndex++;
     }
     this.save();
-    return of()
+    return of(tracking)
+  }
+
+  isDateCompleted(habitId: number, date: Date) : boolean{
+    const ts = this.trackings.filter(t => t.habitId == habitId);
+    return true;
   }
 
   deleteTrackingByHabit(habitId : number) : void{
@@ -62,7 +67,6 @@ export class HabitTrackingService {
   calculateProgress(habit : Habit, periodDates?: Date[]) : number{
     const datesToCheck = periodDates ?? this.getCurrentWeekDates();
     
-    //const goal = habit.frequency 
     if (habit.frequency == HabitFrequency.WEEKLY) {
 
       //récupérer la taille du tableau de trackings filtrer en fonction du habitId et du fait que la date du tracking soit dans la semaine en cours
@@ -98,7 +102,7 @@ export class HabitTrackingService {
     tracking1.id = this.currentIndex++;
     tracking1.habitId = 1;
     tracking1.date = new Date('2025-08-01');
-    tracking1.completed = false;
+    tracking1.completed = true;
     this.trackings.push(tracking1);
 
     const tracking2 = new HabitTracking();
@@ -112,7 +116,7 @@ export class HabitTrackingService {
     tracking3.id = this.currentIndex++;
     tracking3.habitId = 2;
     tracking3.date = new Date('2025-08-01');
-    tracking3.completed = false;
+    tracking3.completed = true;
     this.trackings.push(tracking3);
 
     const tracking4 = new HabitTracking();
@@ -133,7 +137,7 @@ export class HabitTrackingService {
     tracking6.id = this.currentIndex++;
     tracking6.habitId = 6;
     tracking6.date = new Date('2025-08-02');
-    tracking6.completed = false;
+    tracking6.completed = true;
     this.trackings.push(tracking6);
 
     const tracking7 = new HabitTracking();
@@ -147,7 +151,7 @@ export class HabitTrackingService {
     tracking8.id = this.currentIndex++;
     tracking8.habitId = 1;
     tracking8.date = new Date('2025-08-02');
-    tracking8.completed = false;
+    tracking8.completed = true;
     this.trackings.push(tracking8);
 
     const tracking9 = new HabitTracking();
@@ -175,7 +179,7 @@ export class HabitTrackingService {
     tracking12.id = this.currentIndex++;
     tracking12.habitId = 2;
     tracking12.date = new Date('2025-08-03');
-    tracking12.completed = false;
+    tracking12.completed = true;
     this.trackings.push(tracking12);
 
     const tracking13 = new HabitTracking();
@@ -189,7 +193,7 @@ export class HabitTrackingService {
     tracking14.id = this.currentIndex++;
     tracking14.habitId = 4;
     tracking14.date = new Date('2025-08-03');
-    tracking14.completed = false;
+    tracking14.completed = true;
     this.trackings.push(tracking14);
 
     const tracking15 = new HabitTracking();
@@ -210,7 +214,7 @@ export class HabitTrackingService {
     tracking17.id = this.currentIndex++;
     tracking17.habitId = 7;
     tracking17.date = new Date('2025-08-03');
-    tracking17.completed = false;
+    tracking17.completed = true;
     this.trackings.push(tracking17);
 
     const tracking18 = new HabitTracking();
@@ -224,7 +228,7 @@ export class HabitTrackingService {
     tracking19.id = this.currentIndex++;
     tracking19.habitId = 9;
     tracking19.date = new Date('2025-08-03');
-    tracking19.completed = false;
+    tracking19.completed = true;
     this.trackings.push(tracking19);
   }
 

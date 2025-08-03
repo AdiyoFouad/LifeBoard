@@ -1,5 +1,5 @@
 import { HabitService } from './../../services/habit/habit.service';
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { Habit } from '../../models/habit.model';
 import { HabitTrackingService } from '../../services/habit-tracking/habit-tracking.service';
 import { map } from 'rxjs';
 import { HabitComponent } from '../../components/habit/habit.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-habit-list',
@@ -15,6 +16,7 @@ import { HabitComponent } from '../../components/habit/habit.component';
     MatIconModule,
     HabitComponent,
     MatButtonModule,
+    DatePipe
   ],
   templateUrl: './habit-list.component.html',
   styleUrl: './habit-list.component.css'
@@ -35,6 +37,30 @@ export class HabitListComponent {
   
   addHabit(){
     this.router.navigate(['/habit']);
+  }
+
+  reload(id : number){
+    
+  }
+
+  
+  getCurrentWeekDates(): Date[] {
+    const now = new Date();
+    const day = now.getDay();
+    const diffToMonday = day == 0 ? -6 : 1 - day;
+
+    const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    monday.setDate(now.getDate() + diffToMonday);
+
+    const weekDates : Date [] = [];
+
+    for (let i = 0; i<7; i++){
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      weekDates.push(d);
+    }
+
+    return weekDates;
   }
 
 }

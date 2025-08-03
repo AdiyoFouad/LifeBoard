@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>{{ habit.name }}</h2>
+<mat-dialog-content>
+    <p>Frequency : {{ habit.frequency }} - Goal : {{ habit.goal}}</p>
+
+    @if (habit.frequency == HabitFrequency.DAILY) {
+        <div class="daily">
+            @for (day of weekDays; track $index; let i = $index) {
+                <span>{{ day }}</span>
+                <div class="goal-cases">
+                    @for (tracking of habitDailyTrackings()[i]; track $index ) {
+                        <mat-checkbox [disabled]="futurDay(weekDates[i])" [checked]="tracking.completed" (change)="toggleTracking(tracking, i, weekDates[i])">{{tracking.id}}
+                        </mat-checkbox>
+                    }
+                </div>
+            }
+        </div>
+    }
+
+    @if (habit.frequency == HabitFrequency.WEEKLY) {
+        <div class="weekly">
+            <div class="goal-cases">
+                @for (tracking of habitWeeklyTrackings(); track $index ) {
+                    <mat-checkbox [checked]="tracking.completed" (change)="toggleTracking(tracking, 0, weekDates[0])">{{tracking.id}}
+                    </mat-checkbox>
+                }
+            </div>
+        </div>
+    }
+</mat-dialog-content>
