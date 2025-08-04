@@ -1,6 +1,12 @@
-.grid-daily {
+.daily {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px
+}
+
+.goal-cases {
+    background-color: rgba(53, 49, 49, 0.114);
 }
 
 .day-column {

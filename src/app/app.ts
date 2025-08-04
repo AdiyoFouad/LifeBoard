@@ -32,10 +32,20 @@ export class App implements OnInit, OnDestroy{
   private breakpointObserver = inject(BreakpointObserver);
   private subscriptions = new Subscription();
   private router = inject(Router);
+
+  
+  isDarkMode = false;
   
   private readonly dialog = inject(MatDialog);
 
   ngOnInit(): void {
+
+    
+    const savedTheme = localStorage.getItem('theme') || 'light-theme';
+    this.isDarkMode = savedTheme == 'dark-theme';
+    const contentContainer = document.getElementById("main-content");
+    contentContainer?.classList.add(this.isDarkMode ? 'dark-theme' : 'light-theme');
+
 
     const breakpointSubscription =  this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result) => {
       this.isMobile.set(result.matches);
@@ -47,8 +57,8 @@ export class App implements OnInit, OnDestroy{
     this.subscriptions.unsubscribe();
   }
 
-  goAddTask(){
-    this.router.navigate(['/task']);
+  goTo(page : string){
+    this.router.navigate(['', page]);
   }
 
   addBudget(){

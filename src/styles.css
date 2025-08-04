@@ -2,3 +2,28 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.light-theme {
+    --bg-color: rgba(56, 55, 99, 0.038);
+    --text-color : #222222;
+    --title : rgb(37, 37, 150);
+}
+
+.dark-theme {
+    --bg-color: #121212;
+    --text-color : #e0e0e0;
+    --title : rgb(252, 228, 252);
+
+}
+
+.title {
+    color: var(--title);
+}
+
+#main-content{
+    background-color: var(--bg-color);
+}
+
+.habit-card {
+    color: #121212;
+}

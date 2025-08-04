@@ -1,1 +1,26 @@
-<p>settings works!</p>
+<div class="title">
+    <mat-icon color="warn">settings</mat-icon>
+    <h2>Settings</h2>
+</div>
+
+
+<div class="settings"> 
+    <div class="setting">
+        <h3>Appearence</h3>
+        <mat-slide-toggle [checked]="isDarkMode" (change)="toggleTheme($event.checked)"> Dark Mode</mat-slide-toggle>
+    </div>
+
+    <div class="setting">
+        <h3>Data Management</h3>
+        <button mat-stroked-button (click)="resetData()">Reset All Data</button>
+    </div>
+
+    <div>
+        <h3>About App</h3>
+        <div>
+            <p>Version : 1.0.0</p>
+            <p>Author : ODJOUOYE Adiyo Fouad</p>
+            <p>Git : <a href=""></a></p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.settings {
+    background-color: white;
+    padding: 15px;
+}
+
+.setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

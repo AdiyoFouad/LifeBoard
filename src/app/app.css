@@ -47,7 +47,6 @@ mat-toolbar {
 
 mat-sidenav-content div.main-content {
     padding: 1px 20px;
-    background-color: rgba(56, 55, 99, 0.038);
     min-height: 100%;
 }
 

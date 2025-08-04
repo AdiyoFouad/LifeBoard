@@ -8,7 +8,7 @@
         <div class="menu-item">
             <mat-icon>task</mat-icon>
             <a mat-list-item routerLink="/tasks" routerLinkActive="active">Tasks</a>
-            <button matMiniFab type="button" (click)="goAddTask()"><mat-icon>add</mat-icon></button>
+            <button matMiniFab type="button" (click)="goTo('task')"><mat-icon>add</mat-icon></button>
         </div>
         <div class="menu-item">
             <mat-icon>attach_money</mat-icon>
@@ -18,7 +18,7 @@
         <div class="menu-item">
             <mat-icon>self_improvement</mat-icon>
             <a mat-list-item routerLink="/habits" routerLinkActive="active">Habits</a>
-            <button matMiniFab type="button"><mat-icon>add</mat-icon></button>
+            <button matMiniFab type="button"  (click)="goTo('habit')"><mat-icon>add</mat-icon></button>
         </div>
         <div class="menu-item">
             <mat-icon>settings</mat-icon>
@@ -34,7 +34,7 @@
             </button>
             <span>Mon Application</span>
         </mat-toolbar>
-        <div class="main-content">
+        <div class="main-content" id="main-content">
             <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>

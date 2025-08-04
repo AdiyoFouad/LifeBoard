@@ -1,6 +1,6 @@
 <div class="title">
     <button mat-flat-button (click)="goBack()">Back<mat-icon>arrow_back</mat-icon></button>
-    <h2>{{habitId == -1 ? 'Add' : 'Update'}} Habit {{habitId}}</h2>
+    <h2>{{habitId == -1 ? 'Add' : 'Update'}} Habit</h2>
 </div>
 
 <form [formGroup]="formGroup" (submit)="submit($event)">
