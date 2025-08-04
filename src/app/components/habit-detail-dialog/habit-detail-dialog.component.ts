@@ -1,5 +1,5 @@
 import { HabitFrequency } from './../../utils/habit.utils';
-import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Habit } from '../../models/habit.model';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -15,7 +15,7 @@ import { HabitTracking } from '../../models/habit-tracking.model';
   templateUrl: './habit-detail-dialog.component.html',
   styleUrl: './habit-detail-dialog.component.css'
 })
-export class HabitDetailDialogComponent implements OnDestroy{
+export class HabitDetailDialogComponent{
 
   habit : Habit = Object.assign(new Habit(), inject(MAT_DIALOG_DATA));
 
@@ -28,9 +28,6 @@ export class HabitDetailDialogComponent implements OnDestroy{
   habitDailyTrackings =  signal<any[]>([]);
 
   habitWeeklyTrackings = signal<HabitTracking[]>([]);
-
-
-  private dialogRef = inject(MatDialogRef<HabitDetailDialogComponent>);
 
   constructor(){
     
@@ -122,10 +119,6 @@ export class HabitDetailDialogComponent implements OnDestroy{
     });
   }
 
-
-  ngOnDestroy(): void {
-    this.dialogRef.close(this.habit.id);
-  }
 
   
 
