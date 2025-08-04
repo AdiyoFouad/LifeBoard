@@ -6,7 +6,22 @@
     </div> 
 </div>
 
-<div>
+<div class="top"> 
+    <mat-card class="balance-div">
+        <div class="balance">
+            <p>Current balance : </p>
+            <p  class="amount"> {{currentBalence}} $</p>
+        </div>
+        <div class="income">
+            <p>Total Income :</p>
+            <p class="amount">+ {{income()}} $</p>
+        </div>
+        <div class="expense">
+            <p>Total Expenses :</p>
+            <p  class="amount">- {{expenses()}} $</p>
+        </div>
+    </mat-card>
+
     <app-budget-filter (filterBudget)="filterBudget($event)"></app-budget-filter>
 </div>
 

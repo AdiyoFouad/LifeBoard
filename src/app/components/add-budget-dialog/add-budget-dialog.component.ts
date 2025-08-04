@@ -74,7 +74,6 @@ export class AddBudgetDialogComponent implements OnInit, OnDestroy{
       return;
     }
     const budget = Object.assign(new Budget(), this.formGroup.value);
-    console.log(budget);
     const addBudgetSubscription = this.budgetService.add(budget).subscribe();
     this.subscriptions.add(addBudgetSubscription);
   }

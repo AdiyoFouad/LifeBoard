@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { BudgetService } from '../../services/budget/budget.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,9 @@ import { AddBudgetDialogComponent } from '../../components/add-budget-dialog/add
 import { filter, switchMap, tap } from 'rxjs';
 import { BudgetFilterComponent } from '../../components/budget-filter/budget-filter.component';
 import { IBudgetFilter } from '../../interfaces/budget-filter.interface';
+import { Budget } from '../../models/budget.model';
+import { BudgetType } from '../../utils/budget.utils';
+import { MatCard } from "@angular/material/card";
 
 @Component({
   selector: 'app-budget',
@@ -20,14 +23,21 @@ import { IBudgetFilter } from '../../interfaces/budget-filter.interface';
     MatTableModule,
     MatPaginatorModule,
     DatePipe,
-    BudgetFilterComponent
-  ],
+    BudgetFilterComponent,
+    MatCard
+],
   templateUrl: './budget.component.html',
   styleUrl: './budget.component.css'
 })
 export class BudgetComponent implements OnInit{
   private budgetService = inject(BudgetService);
   budgets = toSignal(this.budgetService.getAll());
+
+  
+  income = signal<number>(0);
+  expenses = signal<number>(0);
+
+  currentBalence = 0;
 
   displayedColumns: string[] = ['date', 'type', 'amount', 'category'];
   dataSource = new MatTableDataSource<any>();
@@ -38,6 +48,8 @@ export class BudgetComponent implements OnInit{
 
   ngOnInit(): void {
     this.dataSource.data = this.budgets() || [];
+    this.setAmount(this.budgets() || []);
+    this.currentBalence = this.income() - this.expenses();
   }
   
   ngAfterViewInit() {
@@ -47,13 +59,26 @@ export class BudgetComponent implements OnInit{
   addBudget(){
     const dialogRef = this.dialog.open(AddBudgetDialogComponent);
     dialogRef.afterClosed().subscribe(_ => {
+      console.log("dd");
       this.dataSource.data = this.budgets() || [];
+      this.setAmount(this.budgets() || []);
     });
   }
 
   filterBudget(filter : IBudgetFilter){
     this.budgetService.getFilteredBudgets(filter).subscribe(data => {
       this.dataSource.data = data;
+      this.setAmount(data);
     });
+  }
+
+  setAmount(budgets : Budget[]){
+    
+          this.income.set(
+            budgets.filter(budget => budget.type == BudgetType.INCOME).reduce((acc, b) => acc + b.amount, 0)
+          );
+          this.expenses.set(
+            budgets.filter(budget => budget.type == BudgetType.EXPENSE).reduce((acc, b) => acc + b.amount, 0)
+          );
   }
 }

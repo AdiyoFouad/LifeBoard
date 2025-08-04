@@ -10,6 +10,50 @@
     text-align: right;
 }
 
+.top {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.top .balance-div{
+    width: 40%;
+    min-width: 250px;
+    padding: 15px;
+}
+
+
+
+.balance, .expense, .income {
+    display: flex;
+    justify-content: space-between;
+    margin: 0; 
+}
+
+.balance, .expense, .income {
+    font-weight: bold;
+}
+.balance, .amount{
+    font-weight: bold;
+}
+
+.expense {
+    color: red;
+}
+
+.income {
+    color: green;
+}
+
+
+.expense, .income {
+    font-size: x-small;
+}
+
+
 .no-data {
     padding: 40px 0;
     text-align: center;
