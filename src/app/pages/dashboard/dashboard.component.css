@@ -1,0 +1,74 @@
+.title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.dashboard-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.dashboard-cards .card {
+    flex: 1 1 calc(33% - 1rem);
+    min-width: 280px;
+    height: 450px;
+    padding: 1rem;
+}
+
+.dashboard-cards .card mat-card-title {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+}/*
+
+.dashboard-cards .card mat-card-content .ligne {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.dashboard-cards .card mat-card-content .ligne p{
+    margin: 10px 0 0 0;
+}
+*/
+
+.balance, .expense, .income {
+    display: flex;
+    justify-content: space-between;
+    margin: 0; 
+}
+
+.balance, .expense, .income {
+    font-weight: bold;
+}
+.balance, .amount{
+    font-weight: bold;
+}
+
+.expense {
+    color: red;
+}
+
+.income {
+    color: green;
+}
+
+
+.expense, .income {
+    font-size: x-small;
+}
+
+
+.dashboard-cards .card canvas{
+    margin: auto;
+}
+
+
+
+@media (max-width : 768px) {
+   .dashboard-cards .card {
+        min-height: 350px;
+    }
+}
