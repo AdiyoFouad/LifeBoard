@@ -141,4 +141,10 @@ export class HabitService {
     return of();
   }
 
+  reset() : Observable<void>{
+    this.habits = [];
+    this.save();
+    return of()
+  }
+
 }

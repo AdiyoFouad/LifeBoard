@@ -151,4 +151,10 @@ export class BudgetService {
     return of(filteredBudgets);
   }
 
+  reset() : Observable<void>{
+    this.budgets = [];
+    this.save();
+    return of()
+  }
+
 }

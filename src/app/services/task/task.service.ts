@@ -198,5 +198,11 @@ export class TaskService {
     
   }
 
+  reset() : Observable<void>{
+    this.tasks = [];
+    this.save();
+    return of()
+  }
+
 
 }

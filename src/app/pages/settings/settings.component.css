@@ -14,3 +14,9 @@
     align-items: center;
     justify-content: space-between;
 }
+
+#git_img {
+    width:  1.2em;
+    height:  1.2em;
+    margin-right: 5px;
+}

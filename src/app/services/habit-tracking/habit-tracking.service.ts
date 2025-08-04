@@ -261,6 +261,11 @@ export class HabitTrackingService {
     );
   }
 
+  reset() : Observable<void>{
+    this.trackings = [];
+    this.save();
+    return of()
+  }
 
   
 }

@@ -7,7 +7,7 @@
 <div class="settings"> 
     <div class="setting">
         <h3>Appearence</h3>
-        <mat-slide-toggle [checked]="isDarkMode" (change)="toggleTheme($event.checked)"> Dark Mode</mat-slide-toggle>
+        <mat-slide-toggle [checked]="isDarkMode()" (change)="toggleTheme($event.checked)"> Dark Mode</mat-slide-toggle>
     </div>
 
     <div class="setting">
@@ -20,7 +20,7 @@
         <div>
             <p>Version : 1.0.0</p>
             <p>Author : ODJOUOYE Adiyo Fouad</p>
-            <p>Git : <a href=""></a></p>
+            <p><img id="git_img" src="img/icon_github.png" alt="git">Git : <a target="_blank" href="https://github.com/AdiyoFouad/LifeBoard">Click here</a></p>
         </div>
     </div>
 </div>
