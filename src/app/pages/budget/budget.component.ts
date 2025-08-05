@@ -37,7 +37,7 @@ export class BudgetComponent implements OnInit{
   income = signal<number>(0);
   expenses = signal<number>(0);
 
-  currentBalence = 0;
+  currentBalence = signal<number>(0);
 
   displayedColumns: string[] = ['date', 'type', 'amount', 'category'];
   dataSource = new MatTableDataSource<any>();
@@ -49,7 +49,7 @@ export class BudgetComponent implements OnInit{
   ngOnInit(): void {
     this.dataSource.data = this.budgets() || [];
     this.setAmount(this.budgets() || []);
-    this.currentBalence = this.income() - this.expenses();
+    this.currentBalence.set(this.income() - this.expenses());
   }
   
   ngAfterViewInit() {
@@ -59,9 +59,9 @@ export class BudgetComponent implements OnInit{
   addBudget(){
     const dialogRef = this.dialog.open(AddBudgetDialogComponent);
     dialogRef.afterClosed().subscribe(_ => {
-      console.log("dd");
       this.dataSource.data = this.budgets() || [];
       this.setAmount(this.budgets() || []);
+      this.currentBalence.set(this.income() - this.expenses());
     });
   }
 
