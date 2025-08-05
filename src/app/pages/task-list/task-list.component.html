@@ -12,7 +12,7 @@
 </div>
 
 <div class="mat-elevation-z8" >
-    <table mat-table [dataSource]="dataSource!" >
+    <table mat-table [dataSource]="dataSource!" class="table-tasks">
         <ng-container matColumnDef="title">
             <th mat-header-cell *matHeaderCellDef> Title</th>
             <td mat-cell *matCellDef="let task">{{task.title}}</td>

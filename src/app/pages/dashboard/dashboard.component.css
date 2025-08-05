@@ -67,6 +67,16 @@
 
 
 
+mat-card {
+    background-color: var(--bg-card);
+    color: var(--text-color);
+}
+mat-card-subtitle p{
+    color: var(--text-color);
+}
+
+
+
 @media (max-width : 768px) {
    .dashboard-cards .card {
         min-height: 350px;

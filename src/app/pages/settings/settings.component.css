@@ -5,7 +5,8 @@
 }
 
 .settings {
-    background-color: white;
+    background-color: var(--bg-card);
+    color: var(--text-color);
     padding: 15px;
 }
 
@@ -13,6 +14,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+mat-slide-toggle span{
+    color: var(--text-color);
+}
+
+a[target="_blank"] {
+    text-decoration: none;
+    color: var(--title);
 }
 
 #git_img {

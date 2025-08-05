@@ -23,6 +23,8 @@
     width: 40%;
     min-width: 250px;
     padding: 15px;
+    background-color: var(--bg-card);
+    color: var(--text-color);
 }
 
 
@@ -53,9 +55,18 @@
     font-size: x-small;
 }
 
+.table-budget tr{
+    background-color: var(--bg-card);
+    color: var(--text-color);
+}
+
+mat-paginator {
+    background-color: var(--bg-paginator);    
+    color: var(--text-color);
+}
 
 .no-data {
     padding: 40px 0;
     text-align: center;
-
+    color: var(--text-color);
 }

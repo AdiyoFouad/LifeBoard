@@ -5,6 +5,12 @@
     justify-content: space-between;
     padding: 15px;
     height: 250px;
+    background-color: var(--bg-card);
+    color: var(--text-color);
+}
+
+.mat-mdc-card-subtitle {
+    color: var(--text-color);
 }
 
 mat-card-title{

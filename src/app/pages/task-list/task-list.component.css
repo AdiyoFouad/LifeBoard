@@ -23,7 +23,7 @@ table {
     display: inline-flex;
     width: 50%;
     gap: 30px;
-    background-color: whitesmoke;
+    background-color:  rgba(219, 219, 203, 0.493);
 }
 
 .legend *{
@@ -36,10 +36,20 @@ table {
     margin-right: 35px;
 }
 
+.table-tasks tr{
+    background-color: var(--bg-card);
+    color: var(--text-color);
+}
+
+mat-paginator {
+    background-color: var(--bg-paginator);    
+    color: var(--text-color);
+}
+
 .no-data {
     padding: 40px 0;
     text-align: center;
-
+    color: var(--text-color);
 }
 
 

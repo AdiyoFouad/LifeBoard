@@ -9,3 +9,7 @@ form {
     align-items: center;
     flex-wrap: wrap;
 }
+
+mat-hint {
+    color: var(--text-color);
+}
