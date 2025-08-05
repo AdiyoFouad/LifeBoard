@@ -1,74 +1,13 @@
 
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, Signal, signal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule, MatNavList } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { filter, Subject, Subscription, takeUntil, tap } from 'rxjs';
-import { AddBudgetDialogComponent } from './components/add-budget-dialog/add-budget-dialog.component';
+import { Component} from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   imports: [
-    CommonModule,
-    RouterOutlet, 
-    RouterLink,
-    RouterLinkActive,
-    MatSidenavModule, 
-    MatListModule,
-    MatToolbarModule, 
-    MatIconModule, 
-    MatButtonModule],
+    RouterOutlet
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit, OnDestroy{
-  isMobile = signal(false);
-  private breakpointObserver = inject(BreakpointObserver);
-  private subscriptions = new Subscription();
-  private router = inject(Router);
-
-  
-  isDarkMode = false;
-  
-  private readonly dialog = inject(MatDialog);
-
-  ngOnInit(): void {
-
-    
-    const savedTheme = localStorage.getItem('theme') || 'light-theme';
-    this.isDarkMode = savedTheme == 'dark-theme';
-    const contentContainer = document.getElementById("main-content");
-    contentContainer?.classList.add(this.isDarkMode ? 'dark-theme' : 'light-theme');
-
-
-    const breakpointSubscription =  this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result) => {
-      this.isMobile.set(result.matches);
-    });
-    this.subscriptions.add(breakpointSubscription);
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
-  goTo(page : string){
-    this.router.navigate(['', page]);
-  }
-
-  addBudget(){
-      const dialogRef = this.dialog.open(AddBudgetDialogComponent);
-      dialogRef.afterClosed().pipe(
-        filter(confirm => confirm)
-      ).subscribe(_ => {
-        this.router.navigate(['/budget'])
-      });
-    }
-
-  
-}
+export class App {}
